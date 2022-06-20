@@ -1,3 +1,43 @@
+<?php
+// session_start();
+if(isset($_POST['save'])) {
+if (empty($_POST['title'])  || empty($_POST['author']) || empty($_POST['description'] || empty($_POST['date']))) {
+  echo '<div class="alert alert-danger text-center" role="alert">
+    Saisissez votre recherche !
+  </div>';} else {
+    if (strlen(trim($_POST['title'])) < 3) {
+      echo '<div class="alert alert-danger text-center" role="alert">
+      Saisissez minimum trois lettres svp!
+    </div>';    } else {
+        $title=$_POST['title'];
+        $author=$_POST['author'];
+        $description=$_POST['description'];
+        $date=$_POST['date'];
+
+    require_once 'connection2.php';
+
+    $requete = "INSERT INTO book (title,author,description,date) VALUES('$title','$author','$description','$date')";
+    $exec = $pdo->query($requete);
+
+    if($exec) {
+         echo '<div class="alert alert-success text-center" role="alert">
+    add validate !
+  </div>';
+    }
+ 
+      // $_SESSION['message'] = 'add validate !';
+    // header("location:tableau.php");
+
+ 
+    }
+}
+
+}
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -19,7 +59,7 @@
         </div>
     </nav>
     <div class="container">
-<form action="traitement2.php" method="post">
+<form action="" method="post">
     <div class="card m-4">
       <div class="card-header text-center">Add New Book</div>
       <div class="card-body">
@@ -60,7 +100,7 @@
           <input type="date" class="form-control" name="date"/>
         </div>
         <div>
-         <input type="submit" class="bg bg-dark text-light border rounded-1 p-2" value="Save">
+         <input type="submit" name="save" class="bg bg-dark text-light border rounded-1 p-2" value="Save">
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
 <?php 
-
+$execc = null;
 if(isset($_POST['search'])) {
 
   if(empty($_POST['inputsearch'])) 
@@ -18,7 +18,7 @@ if(isset($_POST['search'])) {
     
     $search = "SELECT * from book where title='$sch' or author='$sch'" ;
     $execc = $pdo->query($search);
-    $ress = $execc->fetch();
+    // $ress = $execc->fetch();
     // echo "<pre>";
     // print_r($ress);
     // echo "</pre>";
@@ -74,6 +74,9 @@ if(isset($_POST['search'])) {
   </thead>
   <tbody>
     <?php 
+    if($execc != null) {
+      ?>
+    <?php 
     
     while ($ress = $execc->fetch()) : ?>
     <tr>
@@ -89,6 +92,8 @@ if(isset($_POST['search'])) {
       </td>
     </tr>
     <?php endwhile; ?>
+    <?php } ?>
+
   </tbody>
       </table>
     </div>

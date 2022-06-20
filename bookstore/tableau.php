@@ -1,5 +1,5 @@
 <?php 
-
+// session_start();
 require_once 'connection2.php';
 
 $req = "SELECT * FROM book where id>=1 ";
@@ -17,6 +17,43 @@ if(isset($_GET['id'])) {
     }
 }
 
+// $execu = null;
+if(isset($_POST['search'])) {
+
+  if(empty($_POST['inputsearch'])) 
+  {
+    echo '<div class="alert alert-danger text-center" role="alert">
+    Saisissez votre recherche !
+  </div>';
+  } 
+  else {
+    if (strlen(trim($_POST['inputsearch'])) < 3) {
+          echo '<div class="alert alert-danger text-center" role="alert">
+      Saisissez minimum trois lettres svp!
+    </div>';
+      
+  } else {
+
+    $sch = $_POST['inputsearch'];
+
+    require_once 'connection2.php';
+
+    
+    $search = "SELECT * from book where title='$sch' or author='$sch'" ;
+    $execu = $pdo->query($search);
+    // $ress = $execc->fetch();
+    // echo "<pre>";
+    // print_r($ress);
+    // echo "</pre>";
+
+    echo '<div class="alert alert-success text-center" role="alert">
+    search validate !
+  </div>';
+    // header('location:tableau.php');
+  }
+  
+  }
+}
 
 
 
@@ -44,9 +81,20 @@ if(isset($_GET['id'])) {
         </div>
     </nav>
 
-    <div class="m-4">
+    <?php 
+  //   if(isset($_SESSION['message'])) {
+  //     echo "<div class='alert alert-success text-center' role='alert'>
+  //    ". $_SESSION['message']."
+  // </div>";
+  //   }?>
+    <!-- <div class="m-4">
     <a href="search.php"  class="text-light text-decoration-none bg bg-dark p-1 rounded-1">Search Book</a>
-    </div>
+    </div> -->
+
+    <form class="d-flex m-2" role="search" method="post">
+      <input class="form-control me-2" name="inputsearch" value="" type="search" placeholder="Search" aria-label="Search">
+      <input type="submit" name="search" value="search" class="text-light bg bg-info border-0 rounded-1">
+    </form>
    
     
 <div class="container">
